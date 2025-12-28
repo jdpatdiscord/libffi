@@ -1,12 +1,13 @@
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.15)
 project(libffi C)
 
 set(SOURCES_LIST
     src/closures.c
-    src/java_raw_api
+    src/java_raw_api.c
     src/prep_cif.c
     src/raw_api.c
-    src/types.c)
+    src/types.c
+    src/tramp.c)
 
 if(CMAKE_BUILD_TYPE MATCHES DEBUG)
     list(APPEND SOURCES_LIST src/debug.c)
