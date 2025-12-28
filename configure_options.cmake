@@ -11,6 +11,18 @@ include(CheckTypeSize)
 if(NOT DEFINED VERSION)
     set(VERSION 3.x-dev)
 endif()
+
+# Read FFI_VERSION_NUMBER from configure.ac
+if(NOT DEFINED FFI_VERSION_NUMBER)
+    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/configure.ac" _configure_ac)
+    string(REGEX MATCH "FFI_VERSION_NUMBER=([0-9]+)" _match "${_configure_ac}")
+    if(CMAKE_MATCH_1)
+        set(FFI_VERSION_NUMBER ${CMAKE_MATCH_1})
+    else()
+        message(FATAL_ERROR "Could not parse FFI_VERSION_NUMBER from configure.ac")
+    endif()
+endif()
+
 set(PACKAGE libffi)
 set(PACKAGE_BUGREPORT http://github.com/libffi/libffi/issues)
 set(PACKAGE_NAME ${PACKAGE})
