@@ -42,6 +42,20 @@ add_library(ffi_shared SHARED $<TARGET_OBJECTS:objlib> ${OBJECTS_LIST})
 set_target_properties(ffi_static PROPERTIES OUTPUT_NAME ffi)
 set_target_properties(ffi_shared PROPERTIES OUTPUT_NAME ffi)
 
+set(prefix "${CMAKE_INSTALL_PREFIX}")
+set(exec_prefix "\${prefix}")
+set(libdir "\${exec_prefix}/lib")
+set(toolexeclibdir "\${exec_prefix}/lib")
+set(includedir "\${prefix}/include")
+
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/libffi.pc.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/libffi.pc"
+    @ONLY)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libffi.pc"
+    DESTINATION lib/pkgconfig)
+
 install(TARGETS ffi_static ffi_shared
     EXPORT ${PROJECT_NAME}Targets
     RUNTIME DESTINATION bin
